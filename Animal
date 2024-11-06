@@ -1,0 +1,104 @@
+
+class Animal:
+def init(self, name, animal_class):
+self.name = name
+self.animal_class = animal_class
+self.commands = []
+
+def show_commands(self):
+    return self.commands
+
+def train(self, command):
+    self.commands.append(command)
+class Domestic(Animal):
+def init(self, name):
+super().init(name, 'Domestic')
+
+class Pack(Animal):
+def init(self, name):
+super().init(name, 'Pack')
+
+class AnimalRegistry:
+def init(self):
+self.animals = []
+
+def register_new_animal(self, name, animal_class):
+    if animal_class == 'Domestic':
+        animal = Domestic(name)
+    elif animal_class == 'Pack':
+        animal = Pack(name)
+    else:
+        raise ValueError("Invalid animal class!")
+    
+    self.animals.append(animal)
+    return animal
+
+def show_commands(self, name):
+    for animal in self.animals:
+        if animal.name == name:
+            return animal.show_commands()
+    return "Animal not found!"
+
+def train_animal(self, name, command):
+    for animal in self.animals:
+        if animal.name == name:
+            animal.train(command)
+            return f"{name} has been trained with a new command: {command}"
+    return "Animal not found!"
+class Counter:
+def init(self):
+self.__count = 0
+
+def add(self):
+    self.__count += 1
+
+def get_count(self):
+    return self.__count
+
+def __enter__(self):
+    return self
+
+def __exit__(self, exc_type, exc_value, traceback):
+    if self.__count > 0:
+        raise Exception("Resource remained open or not in try context")
+def menu():
+registry = AnimalRegistry()
+
+while True:
+    print("\nMenu:")
+    print("1. Register a new animal")
+    print("2. Show animal commands")
+    print("3. Train animal with a new command")
+    print("4. Exit")
+
+    choice = input("Select an option (1-4): ")
+
+    if choice == '1':
+        name = input("Enter the name of the animal: ")
+        animal_class = input("Enter the animal class (Domestic/Pack): ")
+        with Counter() as counter:
+            animal = registry.register_new_animal(name, animal_class)
+            counter.add()
+            print(f"{name} (class: {animal_class}) has been registered.")
+            print(f"Total number of animals: {counter.get_count()}")
+
+    elif choice == '2':
+        name = input("Enter the name of the animal to show commands: ")
+        commands = registry.show_commands(name)
+        print(f"Commands for {name}: {commands}")
+
+    elif choice == '3':
+        name = input("Enter the name of the animal to train: ")
+        command = input("Enter a new command: ")
+        result = registry.train_animal(name, command)
+        print(result)
+
+    elif choice == '4':
+        print("Exiting the program.")
+        break
+
+    else:
+        print("Invalid choice, try again.")
+if name == "main":
+menu()
+
